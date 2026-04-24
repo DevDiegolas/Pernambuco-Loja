@@ -1,67 +1,69 @@
 # Pernambuco Materiais de Construção
 
-Site institucional/catálogo da loja. Frontend-only — sem backend, sem banco.
+Site institucional da loja — uma vitrine digital simples, bonita e direta ao ponto.
+Mostra **o que vendemos**, **onde estamos** e **como falar com a gente**, sem complicação.
 
-**Stack:** Vite + React + TypeScript + TailwindCSS + React Router + lucide-react.
-**Dev:** Docker. **Deploy:** Vercel.
-
----
-
-## Rodando localmente (Docker)
-
-```bash
-docker compose up --build
-```
-
-Abre em → **http://localhost:5173** com hot reload (mudanças em `src/` recarregam sozinho).
-
-Parar:
-```bash
-docker compose down
-```
+🌐 **Online em:** [pernambuco-xi.vercel.app](https://pernambuco-xi.vercel.app)
 
 ---
 
-## Deploy
+## Sobre o site
 
-Cada `git push` para `main` dispara redeploy automático na Vercel.
+Single-page com navegação suave entre seções:
 
-Manual via CLI (dentro de container):
-```bash
-docker run -it --rm \
-  -v "$PWD:/app" -w /app \
-  -v "$HOME/.local/share/com.vercel.cli:/root/.local/share/com.vercel.cli" \
-  node:20-alpine npx -y vercel@latest --prod
-```
+- **Início** — apresentação da loja e diferenciais
+- **Produtos** — catálogo com filtro por categoria e busca
+- **Sobre** — nossa história, valores e compromisso
+- **Contato** — endereço, horário, telefone, WhatsApp e mapa
+
+Tudo pensado pra carregar rápido, funcionar bem no celular e ser fácil de atualizar
+conforme a loja for crescendo.
+
+---
+
+## Stack
+
+| Camada | Tecnologia |
+| --- | --- |
+| Framework | React + TypeScript |
+| Build | Vite |
+| Estilo | TailwindCSS |
+| Ícones | lucide-react |
+| Ambiente local | Docker |
+| Hospedagem | Vercel |
+
+---
+
+## Como atualizar conteúdo
+
+Todo o conteúdo do site está em [`src/data/`](src/data) — placeholders prontos para
+substituir conforme as informações reais forem chegando.
+
+| Arquivo | O que mexe |
+| --- | --- |
+| `store.ts` | Endereço, horário, telefones, redes sociais, mapa |
+| `categories.ts` | Categorias da loja |
+| `products.ts` | Itens do catálogo |
+| `highlights.ts` | Diferenciais (entrega, atendimento, etc) |
+
+Para fotos reais, basta trocar os componentes `<PlaceholderImage />` por `<img />`
+apontando para arquivos em `public/`.
 
 ---
 
 ## Estrutura
 
-```
+```text
 src/
 ├── components/
-│   ├── ui/             # primitives (Button, Container, Section, Chip, Icon, PlaceholderImage)
-│   └── layout/         # Layout, Navbar, Footer, Logo, ScrollToTop
-├── features/
-│   ├── home/           # Hero, Highlights, FeaturedCategories, WhyUs, CallToAction
-│   ├── products/       # ProductCard, ProductGrid, CategoryFilter, SearchBar
-│   ├── about/          # StoreStory, Values
-│   ├── contact/        # ContactInfo, MapEmbed
-│   └── shared/         # PageHero
-├── pages/              # rotas (compõem features)
-├── data/               # placeholders (store, categories, products, highlights)
-├── types/              # tipos compartilhados
-└── lib/                # utils
+│   ├── ui/         # peças reutilizáveis (botão, container, ícones…)
+│   └── layout/     # navbar, footer, logo
+├── features/       # blocos de conteúdo do site (hero, produtos, sobre, contato…)
+├── data/           # conteúdo da loja (placeholders)
+├── lib/            # utilitários (scroll suave, helpers)
+└── types/          # tipos compartilhados
 ```
 
-**Conteúdo placeholder** está todo em `src/data/` — único lugar a editar quando vierem fotos e dados reais.
+---
 
-| O quê | Arquivo |
-|---|---|
-| Endereço, horário, telefones, redes sociais | `src/data/store.ts` |
-| Categorias da loja | `src/data/categories.ts` |
-| Produtos do catálogo | `src/data/products.ts` |
-| Diferenciais (entrega, etc) | `src/data/highlights.ts` |
-| Mapa do Google | `mapUrl` em `src/data/store.ts` |
-| Fotos | substituir `<PlaceholderImage />` por `<img src="/fotos/..." />` (subir em `public/`) |
+Feito com cuidado para a sua obra. 🧱
