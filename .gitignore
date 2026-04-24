@@ -12,3 +12,6 @@ dist-ssr
 
 # Vercel
 .vercel
+
+# TS build cache
+*.tsbuildinfo
