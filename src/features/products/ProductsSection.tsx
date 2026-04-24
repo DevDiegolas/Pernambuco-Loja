@@ -45,8 +45,8 @@ export default function ProductsSection({
     <Section
       id={SECTIONS.produtos}
       eyebrow="Catálogo"
-      title="Conheça o que vendemos"
-      description="Mais de 1.500 itens organizados por categoria. Veja um recorte do nosso catálogo — fale com a gente para preço, estoque e entrega."
+      title="Linha completa para todas as etapas da obra"
+      description="Filtre por categoria, busque produtos e consulte preço e disponibilidade direto no WhatsApp."
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <CategoryFilter

@@ -1,35 +1,27 @@
 import Section from "../../components/ui/Section";
 import PlaceholderImage from "../../components/ui/PlaceholderImage";
-import Icon from "../../components/ui/Icon";
 import Reveal from "../../components/ui/Reveal";
-import { CheckCircle2 } from "lucide-react";
+import Button from "../../components/ui/Button";
+import { MessageCircle } from "lucide-react";
 import { store } from "../../data/store";
 import { SECTIONS } from "../../lib/sections";
 
-const points = [
-  "Estoque completo para entrega imediata",
-  "Profissionais que entendem do produto e da obra",
-  "Parcerias com pedreiros, eletricistas e encanadores",
-  "Condições especiais para construtores e revendas",
-];
-
-const values = [
+const valuePoints = [
   {
-    icon: "Hammer",
-    title: "Feito para a obra real",
-    description:
-      "Produtos testados no dia a dia, que aguentam o tranco do canteiro.",
+    title: "Entrega rápida",
+    description: "No prazo certo para a obra não parar.",
   },
   {
-    icon: "Users",
-    title: "Gente que entende",
-    description:
-      "Nossa equipe já passou por obras e sabe recomendar o que é certo.",
+    title: "Pronta entrega",
+    description: "Diversos produtos sempre prontos para sair.",
   },
   {
-    icon: "ShieldCheck",
-    title: "Compromisso",
-    description: "Se prometemos entregar, entregamos. Com nota e garantia.",
+    title: "Montagem do pedido",
+    description: "Ajudamos a montar a lista completa da obra.",
+  },
+  {
+    title: "Locação",
+    description: "Equipamentos e andaimes quando você precisa.",
   },
 ];
 
@@ -37,50 +29,78 @@ export default function AboutSection() {
   return (
     <Section
       id={SECTIONS.sobre}
-      eyebrow="Sobre nós"
-      title={`Conheça a ${store.name}`}
-      description="Mais que uma loja, um parceiro de obra para a sua família ou empresa."
-      className="bg-stone-100/50"
+      eyebrow="Sobre a loja"
+      title="Desde 2025, lado a lado com cada obra"
+      description="Mais que vender materiais, o objetivo é facilitar sua obra com agilidade, suporte técnico e preço justo."
+      className="bg-white"
     >
-      <div className="grid items-start gap-12 lg:grid-cols-2">
-        <div className="space-y-4 text-stone-700">
-          <p>
-            Começamos pequenos, atendendo a vizinhança com poucos itens e muita
-            vontade. Hoje somos referência em materiais de construção na região,
-            mantendo o mesmo cuidado de quando abrimos as portas pela primeira
-            vez.
-          </p>
-          <p>
-            Nosso compromisso é simples: produtos de qualidade, preço justo e
-            atendimento que entende o que o seu projeto precisa — seja uma
-            reforma de banheiro ou uma obra do zero.
-          </p>
-          <ul className="mt-6 space-y-3">
-            {points.map((p) => (
-              <li key={p} className="flex items-start gap-3">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-brand-600" />
-                <span className="text-ink-800">{p}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <PlaceholderImage label="Fachada da loja" ratio="video" />
-      </div>
+      <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.1fr]">
+        <Reveal direction="up">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <PlaceholderImage
+              label="Loja 1 · Praia de Pernambuco"
+              ratio="tall"
+            />
+            <PlaceholderImage
+              label="Loja 2 · Shopping Acapulco"
+              ratio="tall"
+            />
+          </div>
+        </Reveal>
 
-      <div className="mt-14 grid gap-5 md:grid-cols-3">
-        {values.map((v, i) => (
-          <Reveal key={v.title} delay={i * 100} direction="up">
-            <div className="card p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
-              <div className="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-700 ring-1 ring-brand-200">
-                <Icon name={v.icon} className="h-5 w-5" />
-              </div>
-              <h3 className="mt-4 font-display text-lg font-bold text-ink-900">
-                {v.title}
-              </h3>
-              <p className="mt-1 text-sm text-stone-600">{v.description}</p>
+        <Reveal direction="up" delay={100}>
+          <div className="space-y-4 text-stone-700">
+            <p>
+              Nossa loja nasceu com um propósito claro: oferecer soluções
+              completas, com agilidade, preço justo e atendimento de qualidade
+              para cada cliente.
+            </p>
+            <p>
+              Entendemos a necessidade de cada projeto e ajudamos na escolha
+              dos materiais certos para cada etapa, do básico ao acabamento.
+            </p>
+
+            <div className="mt-6 grid gap-0 border border-stone-200 md:grid-cols-2">
+              {valuePoints.map((value) => (
+                <div key={value.title} className="border border-stone-200 p-4">
+                  <h3 className="font-display text-sm font-semibold text-brand-700">
+                    {value.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-stone-600">
+                    {value.description}
+                  </p>
+                </div>
+              ))}
             </div>
-          </Reveal>
-        ))}
+
+            <div className="pt-2">
+              <p className="section-eyebrow">Atendemos todo tipo de obra</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {store.audiences.map((audience) => (
+                  <span
+                    key={audience}
+                    className="rounded-full border border-stone-200 bg-white px-3 py-1 text-sm text-ink-900"
+                  >
+                    {audience}
+                  </span>
+                ))}
+              </div>
+
+              <Button
+                as="a"
+                external
+                href={`https://wa.me/${store.contact.whatsapp}?text=${encodeURIComponent(
+                  "Olá! Quero montar o pedido para minha obra."
+                )}`}
+                variant="primary"
+                className="mt-5"
+              >
+                <MessageCircle className="h-4 w-4" /> Montar pedido para minha
+                obra
+              </Button>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </Section>
   );

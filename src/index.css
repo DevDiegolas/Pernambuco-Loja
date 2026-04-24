@@ -87,6 +87,39 @@ body {
 .anim-pulse-glow  { animation: pulse-glow 7s ease-in-out infinite; }
 .anim-fade-down   { animation: fade-in-down 0.4s ease-out both; }
 
+@keyframes wa-pulse {
+  0%, 100% {
+    box-shadow:
+      0 14px 40px -10px rgba(37, 211, 102, 0.6),
+      0 0 0 0 rgba(37, 211, 102, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 14px 40px -10px rgba(37, 211, 102, 0.6),
+      0 0 0 16px rgba(37, 211, 102, 0);
+  }
+}
+
+.wa-fab {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 40;
+  display: grid;
+  height: 60px;
+  width: 60px;
+  place-items: center;
+  border-radius: 999px;
+  background: #25d366;
+  color: white;
+  animation: wa-pulse 2.2s ease-in-out infinite;
+  transition: transform 0.2s ease;
+}
+
+.wa-fab:hover {
+  transform: scale(1.08);
+}
+
 /* Respeita usuários que pedem menos movimento */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

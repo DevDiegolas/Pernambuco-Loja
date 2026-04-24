@@ -1,4 +1,4 @@
-import { ArrowRight, MapPin, Star } from "lucide-react";
+import { ArrowRight, MessageCircle, Star } from "lucide-react";
 import Container from "../../components/ui/Container";
 import Button from "../../components/ui/Button";
 import PlaceholderImage from "../../components/ui/PlaceholderImage";
@@ -25,43 +25,50 @@ export default function Hero() {
         <div>
           <Reveal direction="up" duration={500}>
             <Chip className="bg-white/10 text-brand-200 ring-brand-300/30">
-              <Star className="h-3.5 w-3.5" /> Loja parceira da sua obra
+              <Star className="h-3.5 w-3.5" /> Guarujá e região · entrega rápida
             </Chip>
           </Reveal>
           <Reveal direction="up" delay={80} duration={700}>
             <h1 className="mt-5 font-display text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl">
-              Tudo para a sua obra,{" "}
-              <span className="text-brand-400">do alicerce ao acabamento.</span>
+              Do básico ao acabamento{" "}
+              <span className="text-brand-400">para sua obra não parar.</span>
             </h1>
           </Reveal>
           <Reveal direction="up" delay={180}>
             <p className="mt-5 max-w-xl text-lg text-stone-300">
-              {store.description}
+              {store.tagline}
             </p>
           </Reveal>
           <Reveal direction="up" delay={260}>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button as="scroll" to={SECTIONS.produtos} variant="primary">
-                Ver produtos <ArrowRight className="h-4 w-4" />
+              <Button
+                as="a"
+                external
+                href={`https://wa.me/${store.contact.whatsapp}?text=${encodeURIComponent(
+                  "Olá! Gostaria de solicitar um orçamento."
+                )}`}
+                variant="primary"
+              >
+                <MessageCircle className="h-4 w-4" /> Solicitar orçamento
               </Button>
-              <Button as="scroll" to={SECTIONS.contato} variant="ghost">
-                <MapPin className="h-4 w-4" /> Como chegar
+              <Button as="scroll" to={SECTIONS.produtos} variant="ghost">
+                Ver categorias <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
           </Reveal>
           <Reveal direction="up" delay={360}>
             <dl className="mt-10 grid max-w-md grid-cols-3 gap-6 border-t border-white/10 pt-6">
               <div>
-                <dt className="text-xs uppercase tracking-wider text-stone-400">Itens</dt>
-                <dd className="font-display text-2xl font-bold">+1.500</dd>
+                <dt className="text-xs uppercase tracking-wider text-stone-400">Unidades</dt>
+                <dd className="font-display text-2xl font-bold">2 lojas</dd>
               </div>
               <div>
-                <dt className="text-xs uppercase tracking-wider text-stone-400">Anos</dt>
-                <dd className="font-display text-2xl font-bold">+15</dd>
+                <dt className="text-xs uppercase tracking-wider text-stone-400">Entrega</dt>
+                <dd className="font-display text-2xl font-bold">24h</dd>
               </div>
               <div>
-                <dt className="text-xs uppercase tracking-wider text-stone-400">Bairros</dt>
-                <dd className="font-display text-2xl font-bold">20+</dd>
+                <dt className="text-xs uppercase tracking-wider text-stone-400">Desde</dt>
+                <dd className="font-display text-2xl font-bold">{store.since}</dd>
               </div>
             </dl>
           </Reveal>
@@ -70,13 +77,17 @@ export default function Hero() {
         <Reveal direction="left" delay={200} duration={900} className="relative">
           <div className="anim-float">
             <PlaceholderImage
-              label="Foto da loja em breve"
+              label="Obra atendida · cliente Guarujá"
               ratio="tall"
               className="rotate-1 ring-white/10"
             />
           </div>
           <div className="anim-float-slow absolute -bottom-6 -left-6 hidden w-56 sm:block">
-            <PlaceholderImage label="Equipe" ratio="square" className="ring-white/10" />
+            <PlaceholderImage
+              label="Obra atendida · reforma"
+              ratio="square"
+              className="ring-white/10"
+            />
           </div>
         </Reveal>
       </Container>

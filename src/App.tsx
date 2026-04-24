@@ -7,6 +7,8 @@ import CallToAction from "./features/home/CallToAction";
 import ProductsSection from "./features/products/ProductsSection";
 import AboutSection from "./features/about/AboutSection";
 import ContactSection from "./features/contact/ContactSection";
+import ServicesSection from "./features/services/ServicesSection";
+import LocationsSection from "./features/locations/LocationsSection";
 
 export default function App() {
   // Filtro de categoria controlado aqui pra que FeaturedCategories
@@ -17,12 +19,14 @@ export default function App() {
     <Layout>
       <Hero />
       <Highlights />
+      <AboutSection />
       <FeaturedCategories onPickCategory={setActiveCategory} />
       <ProductsSection
         activeCategory={activeCategory}
         onCategoryChange={setActiveCategory}
       />
-      <AboutSection />
+      <ServicesSection />
+      <LocationsSection />
       <ContactSection />
       <CallToAction />
     </Layout>

@@ -41,7 +41,7 @@ export default function ProductCard({ product }: { product: Product }) {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-800"
           >
-            <MessageCircle className="h-4 w-4" /> Consultar
+            <MessageCircle className="h-4 w-4" /> Consultar preço
           </a>
         </div>
       </div>
