@@ -5,15 +5,6 @@ export type Category = {
   icon: string; // nome do ícone do lucide-react
 };
 
-export type Product = {
-  id: string;
-  name: string;
-  category: string; // slug da categoria
-  shortDescription: string;
-  unit: string; // ex: "saco 50kg", "milheiro", "metro"
-  badges?: string[];
-};
-
 export type StoreUnit = {
   name: string;
   note: string;
@@ -23,7 +14,7 @@ export type StoreUnit = {
 };
 
 export type ServiceItem = {
-  icon: string; // nome do ícone do lucide-react
+  icon: string;
   title: string;
   description: string;
 };
@@ -57,10 +48,4 @@ export type StoreInfo = {
   audiences: string[];
   services: ServiceItem[];
   mapUrl?: string;
-};
-
-export type Highlight = {
-  icon: string;
-  title: string;
-  description: string;
 };

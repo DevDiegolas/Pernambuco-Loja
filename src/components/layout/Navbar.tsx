@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import Container from "../ui/Container";
-import Button from "../ui/Button";
 import Logo from "./Logo";
 import { store } from "../../data/store";
 import { cn } from "../../lib/cn";
@@ -14,7 +13,7 @@ export default function Navbar() {
   const active = useActiveSection(NAV_ITEMS.map((n) => n.id));
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 10);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -25,20 +24,22 @@ export default function Navbar() {
     scrollToSection(id);
   };
 
+  // No topo: header transparente sobreposto ao Hero escuro.
+  // Após scroll: vidro fosco com hairline para dar legibilidade.
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 w-full transition",
+        "sticky top-0 z-30 w-full transition duration-300",
         scrolled
-          ? "bg-white/85 backdrop-blur shadow-[0_1px_0_rgba(0,0,0,0.04)]"
-          : "bg-white"
+          ? "border-b border-stone-200 bg-stone-50/85 backdrop-blur-md saturate-150"
+          : "border-b border-transparent bg-transparent"
       )}
     >
-      <Container className="flex h-16 items-center justify-between gap-6">
+      <Container className="flex h-[72px] items-center justify-between gap-6">
         <Logo />
 
-        <nav className="hidden items-center gap-1 md:flex">
-          {NAV_ITEMS.map((item) => (
+        <nav className="hidden items-center gap-7 md:flex">
+          {NAV_ITEMS.filter((n) => n.id !== "topo").map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
@@ -47,10 +48,11 @@ export default function Navbar() {
                 go(item.id);
               }}
               className={cn(
-                "rounded-full px-4 py-2 text-sm font-semibold transition",
+                "text-sm font-medium transition-colors",
+                scrolled ? "text-ink-800" : "text-white/85",
                 active === item.id
-                  ? "bg-brand-50 text-brand-700"
-                  : "text-ink-700 hover:bg-stone-100"
+                  ? "text-brand-600"
+                  : "hover:text-brand-500"
               )}
             >
               {item.label}
@@ -60,24 +62,33 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-3 md:flex">
           <a
-            href={`tel:${store.contact.phone.replace(/\D/g, "")}`}
-            className="flex items-center gap-2 text-sm font-semibold text-ink-800 hover:text-brand-700"
+            href={`tel:${store.contact.phoneRaw}`}
+            className={cn(
+              "btn btn-sm btn-outline",
+              !scrolled && "border-white/25 bg-transparent text-white hover:border-white"
+            )}
+            style={{ fontWeight: 500 }}
           >
             <Phone className="h-4 w-4" />
             {store.contact.phone}
           </a>
-          <Button
-            as="a"
-            external
+          <a
             href={`https://wa.me/${store.contact.whatsapp}`}
-            variant="primary"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-sm btn-primary"
           >
-            WhatsApp
-          </Button>
+            <MessageCircle className="h-4 w-4" /> WhatsApp
+          </a>
         </div>
 
         <button
-          className="grid h-10 w-10 place-items-center rounded-xl border border-stone-200 md:hidden"
+          className={cn(
+            "grid h-10 w-10 place-items-center rounded-xl border md:hidden",
+            scrolled
+              ? "border-stone-200 bg-white text-ink-900"
+              : "border-white/25 bg-white/10 text-white backdrop-blur"
+          )}
           aria-label={open ? "Fechar menu" : "Abrir menu"}
           onClick={() => setOpen((o) => !o)}
         >
@@ -87,8 +98,8 @@ export default function Navbar() {
 
       {open && (
         <div className="border-t border-stone-200 bg-white md:hidden">
-          <Container className="flex flex-col gap-2 py-4">
-            {NAV_ITEMS.map((item) => (
+          <Container className="flex flex-col gap-1 py-4">
+            {NAV_ITEMS.filter((n) => n.id !== "topo").map((item) => (
               <a
                 key={item.id}
                 href={`#${item.id}`}
@@ -97,24 +108,29 @@ export default function Navbar() {
                   go(item.id);
                 }}
                 className={cn(
-                  "rounded-xl px-4 py-3 text-base font-semibold",
-                  active === item.id
-                    ? "bg-brand-50 text-brand-700"
-                    : "text-ink-800 hover:bg-stone-100"
+                  "border-b border-stone-100 px-2 py-3 text-base font-medium",
+                  active === item.id ? "text-brand-600" : "text-ink-800"
                 )}
               >
                 {item.label}
               </a>
             ))}
-            <Button
-              as="a"
-              external
-              href={`https://wa.me/${store.contact.whatsapp}`}
-              variant="primary"
-              className="mt-2 w-full"
-            >
-              Falar no WhatsApp
-            </Button>
+            <div className="mt-4 grid grid-cols-2 gap-2.5">
+              <a
+                href={`tel:${store.contact.phoneRaw}`}
+                className="btn btn-outline justify-center"
+              >
+                <Phone className="h-4 w-4" /> Ligar
+              </a>
+              <a
+                href={`https://wa.me/${store.contact.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary justify-center"
+              >
+                <MessageCircle className="h-4 w-4" /> WhatsApp
+              </a>
+            </div>
           </Container>
         </div>
       )}

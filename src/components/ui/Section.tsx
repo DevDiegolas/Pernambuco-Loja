@@ -6,11 +6,12 @@ import Reveal from "./Reveal";
 type Props = {
   id?: string;
   eyebrow?: string;
-  title?: string;
-  description?: string;
+  title?: ReactNode;
+  description?: ReactNode;
   children: ReactNode;
   className?: string;
-  align?: "left" | "center";
+  /** Cor do eyebrow para fundos escuros */
+  variant?: "default" | "dark";
 };
 
 export default function Section({
@@ -20,28 +21,55 @@ export default function Section({
   description,
   children,
   className,
-  align = "left",
+  variant = "default",
 }: Props) {
+  const dark = variant === "dark";
   return (
-    <section id={id} className={cn("py-16 sm:py-20", className)}>
+    <section
+      id={id}
+      className={cn(
+        "relative",
+        // padding generoso (clamp para escala fluida)
+        "py-[clamp(64px,9vw,112px)]",
+        className
+      )}
+    >
       <Container>
         {(eyebrow || title || description) && (
-          <Reveal direction="up" duration={650}>
-            <header
-              className={cn(
-                "mb-10 max-w-2xl",
-                align === "center" && "mx-auto text-center"
+          <header className="mb-14 max-w-3xl">
+            <Reveal direction="up" duration={650}>
+              {eyebrow && (
+                <p
+                  className={cn(
+                    "eyebrow",
+                    dark && "eyebrow-light"
+                  )}
+                >
+                  {eyebrow}
+                </p>
               )}
-            >
-              {eyebrow && <p className="section-eyebrow">{eyebrow}</p>}
-              {title && <h2 className="section-title mt-2">{title}</h2>}
+              {title && (
+                <h2
+                  className={cn(
+                    "sec-title mt-4",
+                    dark && "text-white"
+                  )}
+                >
+                  {title}
+                </h2>
+              )}
               {description && (
-                <p className="mt-4 text-base text-stone-600 sm:text-lg">
+                <p
+                  className={cn(
+                    "sec-sub mt-5 text-base sm:text-lg",
+                    dark && "text-white/70"
+                  )}
+                >
                   {description}
                 </p>
               )}
-            </header>
-          </Reveal>
+            </Reveal>
+          </header>
         )}
         {children}
       </Container>

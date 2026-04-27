@@ -1,15 +1,22 @@
 import { cn } from "../../lib/cn";
 import { scrollToSection } from "../../lib/scroll";
 
-export default function Logo({
-  variant = "dark",
-  className,
-}: {
-  variant?: "dark" | "light";
+type Props = {
+  variant?: "default" | "compact";
   className?: string;
-}) {
-  const text = variant === "dark" ? "text-ink-900" : "text-white";
-  const accent = variant === "dark" ? "text-brand-600" : "text-brand-400";
+  /** Mostra/esconde a marca textual ao lado da logo */
+  showText?: boolean;
+};
+
+// A logo PNG já carrega o nome "PERNAMBUCO MATERIAIS DE CONSTRUÇÃO".
+// Por padrão, exibimos só a imagem para evitar duplicidade visual.
+export default function Logo({
+  className,
+  showText = false,
+  variant = "default",
+}: Props) {
+  const height = variant === "compact" ? "h-9" : "h-11";
+
   return (
     <a
       href="#topo"
@@ -18,22 +25,25 @@ export default function Logo({
         scrollToSection("topo");
       }}
       className={cn(
-        "flex items-center gap-2 font-display font-extrabold tracking-tight",
+        "inline-flex items-center gap-3 font-display font-extrabold tracking-tight",
         className
       )}
+      aria-label="Pernambuco Materiais de Construção"
     >
-      <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-600 text-white shadow-soft">
-        <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden>
-          <path d="M4 19 L12 6 L20 19 Z" fill="currentColor" />
-          <rect x="10" y="14" width="4" height="5" fill="#ea580c" />
-        </svg>
-      </span>
-      <span className={cn("text-lg leading-none", text)}>
-        Pernambuco
-        <span className={cn("ml-1 text-xs font-bold uppercase tracking-widest", accent)}>
-          Materiais
+      <img
+        src="/logo-pernambuco.png"
+        alt="Pernambuco Materiais"
+        className={cn(height, "w-auto select-none")}
+        draggable={false}
+      />
+      {showText && (
+        <span className="hidden text-base leading-none text-ink-900 sm:inline-flex sm:flex-col">
+          Pernambuco
+          <span className="mt-0.5 font-mono text-[10px] font-medium uppercase tracking-[0.18em] text-stone-500">
+            Materiais
+          </span>
         </span>
-      </span>
+      )}
     </a>
   );
 }
