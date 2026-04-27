@@ -1,40 +1,47 @@
-import { ImageOff } from "lucide-react";
+import type { CSSProperties } from "react";
 import { cn } from "../../lib/cn";
 
-type Props = {
-  label?: string;
-  ratio?: "square" | "video" | "tall" | "wide";
-  className?: string;
-};
+type Ratio = "square" | "video" | "tall" | "wide" | "free";
 
-const ratioClass: Record<NonNullable<Props["ratio"]>, string> = {
+const ratioClass: Record<Ratio, string> = {
   square: "aspect-square",
   video: "aspect-video",
   tall: "aspect-[3/4]",
   wide: "aspect-[16/7]",
+  free: "",
+};
+
+type Props = {
+  /** Texto curto exibido no canto inferior esquerdo */
+  label?: string;
+  /** Proporção pré-definida (use "free" para preencher o pai) */
+  ratio?: Ratio;
+  /** Variante escura (sobre Hero ink-900) */
+  dark?: boolean;
+  className?: string;
+  style?: CSSProperties;
 };
 
 export default function PlaceholderImage({
-  label = "Foto em breve",
+  label = "imagem",
   ratio = "video",
+  dark = false,
   className,
+  style,
 }: Props) {
   return (
     <div
+      role="img"
+      aria-label={label}
       className={cn(
-        "placeholder-img relative flex w-full items-center justify-center overflow-hidden rounded-2xl ring-1 ring-stone-200/70",
+        "ph rounded-2xl",
+        dark && "ph-dark",
         ratioClass[ratio],
         className
       )}
-      aria-label={label}
-      role="img"
+      style={style}
     >
-      <div className="flex flex-col items-center gap-2 text-center text-stone-500">
-        <ImageOff className="h-7 w-7 text-brand-500/70" />
-        <span className="text-xs font-medium uppercase tracking-wider">
-          {label}
-        </span>
-      </div>
+      <span className="ph-lbl">{label}</span>
     </div>
   );
 }

@@ -73,6 +73,12 @@ coverage
 *.local
 docker-compose.override.yml
 
+# Documentacao
+docs/
+
+# Bundle do Claude Design (handoff local — não sobe pro repo)
+claudedesign/
+
 # Diversos
 *.pem
 .history

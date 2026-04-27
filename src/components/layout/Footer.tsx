@@ -1,99 +1,114 @@
-import { Instagram, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import Container from "../ui/Container";
-import Logo from "./Logo";
 import { store } from "../../data/store";
 import { NAV_ITEMS } from "../../lib/sections";
 import { scrollToSection } from "../../lib/scroll";
 
 export default function Footer() {
   const year = new Date().getFullYear();
-  return (
-    <footer className="mt-12 bg-ink-900 text-stone-300">
-      <Container className="grid gap-10 py-14 md:grid-cols-4">
-        <div className="space-y-4 md:col-span-2">
-          <Logo variant="light" />
-          <p className="max-w-md text-sm text-stone-400">{store.tagline}</p>
-          <div className="flex gap-3">
-            {store.social.instagram && (
-              <a
-                href={store.social.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="grid h-9 w-9 place-items-center rounded-full bg-white/5 hover:bg-white/10"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-4 w-4" />
-              </a>
-            )}
-            {store.social.facebook && (
-              <a
-                href={store.social.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="grid h-9 w-9 place-items-center rounded-full bg-white/5 hover:bg-white/10"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-4 w-4" />
-              </a>
-            )}
-          </div>
-        </div>
+  const waUrl = `https://wa.me/${store.contact.whatsapp}`;
 
-        <div>
-          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-white">
-            Navegar
-          </h3>
-          <ul className="space-y-2 text-sm">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.id}>
+  return (
+    <footer className="bg-black text-white">
+      <Container className="pb-7 pt-14">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
+          {/* Marca */}
+          <div>
+            <div className="flex items-center gap-3">
+              <img
+                src="/logo-pernambuco.png"
+                alt="Pernambuco Materiais"
+                className="h-10 w-auto brightness-0 invert"
+              />
+            </div>
+            <p className="mt-4 max-w-[34ch] text-[13.5px] leading-[1.6] text-white/55">
+              Materiais de construção com entrega rápida no Guarujá — do básico
+              ao acabamento, com suporte pra obra não parar.
+            </p>
+          </div>
+
+          {/* Navegar */}
+          <div>
+            <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-brand-400">
+              Navegar
+            </div>
+            <div className="flex flex-col gap-2.5">
+              {NAV_ITEMS.filter((n) => n.id !== "topo").map((item) => (
                 <a
+                  key={item.id}
                   href={`#${item.id}`}
                   onClick={(e) => {
                     e.preventDefault();
                     scrollToSection(item.id);
                   }}
-                  className="hover:text-white"
+                  className="text-[13.5px] text-white/75 hover:text-white"
                 >
                   {item.label}
                 </a>
-              </li>
-            ))}
-          </ul>
+              ))}
+            </div>
+          </div>
+
+          {/* Unidades */}
+          <div>
+            <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-brand-400">
+              Unidades
+            </div>
+            <div className="flex flex-col gap-3.5">
+              {store.units.map((u) => (
+                <div
+                  key={u.name}
+                  className="text-[13px] leading-[1.5] text-white/70"
+                >
+                  <div className="mb-0.5 font-semibold text-white">
+                    {u.name}
+                  </div>
+                  {u.address}
+                  <br />
+                  {u.area}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Contato */}
+          <div>
+            <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-brand-400">
+              Contato
+            </div>
+            <div className="flex flex-col gap-2.5 text-[13.5px]">
+              <a
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/85 hover:text-white"
+              >
+                WhatsApp {store.contact.whatsappLabel}
+              </a>
+              <a
+                href={`tel:${store.contact.phoneRaw}`}
+                className="text-white/85 hover:text-white"
+              >
+                Loja {store.contact.phone}
+              </a>
+              {store.social.instagram && (
+                <a
+                  href={store.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/85 hover:text-white"
+                >
+                  Instagram {store.social.instagramHandle}
+                </a>
+              )}
+            </div>
+          </div>
         </div>
 
-        <div>
-          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-white">
-            Contato
-          </h3>
-          <ul className="space-y-2 text-sm">
-            <li className="flex items-start gap-2">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-400" />
-              <span>
-                {store.address.street}, {store.address.neighborhood}
-                <br />
-                {store.address.city} — {store.address.state}
-              </span>
-            </li>
-            <li className="flex items-center gap-2">
-              <Phone className="h-4 w-4 text-brand-400" />
-              <a href={`tel:${store.contact.phone.replace(/\D/g, "")}`}>
-                {store.contact.phone}
-              </a>
-            </li>
-            <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-brand-400" />
-              <a href={`mailto:${store.contact.email}`}>{store.contact.email}</a>
-            </li>
-          </ul>
+        <div className="mt-12 flex flex-wrap justify-between gap-4 border-t border-white/10 pt-5 font-mono text-[11px] uppercase tracking-[0.14em] text-white/45">
+          <div>© {year} {store.name}</div>
+          <div>Guarujá · SP · Desde {store.since}</div>
         </div>
       </Container>
-
-      <div className="border-t border-white/10">
-        <Container className="flex flex-col items-center justify-between gap-2 py-5 text-xs text-stone-500 sm:flex-row">
-          <p>© {year} {store.name}. Todos os direitos reservados.</p>
-          <p>Feito com cuidado para a sua obra.</p>
-        </Container>
-      </div>
     </footer>
   );
 }

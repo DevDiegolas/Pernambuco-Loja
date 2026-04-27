@@ -1,84 +1,176 @@
-import { ArrowRight, MapPin, Star } from "lucide-react";
+import { ArrowRight, MapPin, MessageCircle } from "lucide-react";
 import Container from "../../components/ui/Container";
-import Button from "../../components/ui/Button";
 import PlaceholderImage from "../../components/ui/PlaceholderImage";
-import Chip from "../../components/ui/Chip";
 import Reveal from "../../components/ui/Reveal";
 import { store } from "../../data/store";
 import { SECTIONS } from "../../lib/sections";
+import { scrollToSection } from "../../lib/scroll";
 
 export default function Hero() {
-  return (
-    <section
-      id={SECTIONS.topo}
-      className="relative overflow-hidden bg-ink-900 text-white"
-    >
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-hero-grid bg-[size:48px_48px] opacity-40"
-      />
-      <div
-        aria-hidden
-        className="anim-pulse-glow pointer-events-none absolute -right-32 -top-32 h-[480px] w-[480px] rounded-full bg-brand-600/30 blur-3xl"
-      />
-      <Container className="relative grid items-center gap-12 py-20 md:grid-cols-2 md:py-28">
-        <div>
-          <Reveal direction="up" duration={500}>
-            <Chip className="bg-white/10 text-brand-200 ring-brand-300/30">
-              <Star className="h-3.5 w-3.5" /> Loja parceira da sua obra
-            </Chip>
-          </Reveal>
-          <Reveal direction="up" delay={80} duration={700}>
-            <h1 className="mt-5 font-display text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl">
-              Tudo para a sua obra,{" "}
-              <span className="text-brand-400">do alicerce ao acabamento.</span>
-            </h1>
-          </Reveal>
-          <Reveal direction="up" delay={180}>
-            <p className="mt-5 max-w-xl text-lg text-stone-300">
-              {store.description}
-            </p>
-          </Reveal>
-          <Reveal direction="up" delay={260}>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button as="scroll" to={SECTIONS.produtos} variant="primary">
-                Ver produtos <ArrowRight className="h-4 w-4" />
-              </Button>
-              <Button as="scroll" to={SECTIONS.contato} variant="ghost">
-                <MapPin className="h-4 w-4" /> Como chegar
-              </Button>
-            </div>
-          </Reveal>
-          <Reveal direction="up" delay={360}>
-            <dl className="mt-10 grid max-w-md grid-cols-3 gap-6 border-t border-white/10 pt-6">
-              <div>
-                <dt className="text-xs uppercase tracking-wider text-stone-400">Itens</dt>
-                <dd className="font-display text-2xl font-bold">+1.500</dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-wider text-stone-400">Anos</dt>
-                <dd className="font-display text-2xl font-bold">+15</dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-wider text-stone-400">Bairros</dt>
-                <dd className="font-display text-2xl font-bold">20+</dd>
-              </div>
-            </dl>
-          </Reveal>
-        </div>
+  const waUrl = `https://wa.me/${store.contact.whatsapp}?text=${encodeURIComponent(
+    "Olá! Gostaria de solicitar um orçamento."
+  )}`;
 
-        <Reveal direction="left" delay={200} duration={900} className="relative">
-          <div className="anim-float">
-            <PlaceholderImage
-              label="Foto da loja em breve"
-              ratio="tall"
-              className="rotate-1 ring-white/10"
-            />
+  const stats = [
+    { n: "2", u: "lojas", d: "no Guarujá" },
+    { n: "24h", u: "entrega", d: "na região" },
+    { n: store.since, u: "", d: "fundação" },
+  ];
+
+  return (
+    <section id={SECTIONS.topo} className="hero-dark">
+      <Container className="relative z-[2] pt-[clamp(80px,8vw,120px)] pb-[clamp(64px,7vw,96px)]">
+        <div className="grid items-center gap-[clamp(32px,5vw,72px)] lg:grid-cols-[1.1fr_1fr]">
+          {/* LEFT */}
+          <div>
+            <Reveal>
+              <div className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-2 font-mono text-[12px] uppercase tracking-[0.1em] text-white">
+                <span
+                  className="h-1.5 w-1.5 rounded-full bg-brand-500"
+                  style={{ boxShadow: "0 0 0 4px rgba(249,115,22,.2)" }}
+                />
+                <MapPin className="h-3 w-3" />
+                Guarujá &amp; região · entrega rápida
+              </div>
+            </Reveal>
+
+            <Reveal delay={80}>
+              <h1
+                className="mt-6 font-display font-extrabold leading-[1.0] tracking-[-0.035em] text-white"
+                style={{ fontSize: "clamp(40px, 7vw, 80px)" }}
+              >
+                Do básico
+                <br />
+                <span className="text-brand-500">ao acabamento.</span>
+              </h1>
+            </Reveal>
+
+            <Reveal delay={160}>
+              <p
+                className="mt-6 max-w-[48ch] leading-[1.55] text-white/65"
+                style={{ fontSize: "clamp(16px, 1.6vw, 19px)" }}
+              >
+                Materiais de construção com entrega rápida no Guarujá. Tudo que
+                sua obra precisa, com suporte pra montar o pedido certo.
+              </p>
+            </Reveal>
+
+            <Reveal delay={240}>
+              <div className="mt-9 flex flex-wrap gap-3">
+                <a
+                  href={waUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-lg btn-primary"
+                >
+                  <MessageCircle className="h-[18px] w-[18px]" /> Solicitar orçamento
+                </a>
+                <a
+                  href={`#${SECTIONS.produtos}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(SECTIONS.produtos);
+                  }}
+                  className="btn btn-lg border border-white/25 bg-transparent text-white hover:bg-white/10"
+                >
+                  Ver categorias <ArrowRight className="h-[18px] w-[18px]" />
+                </a>
+              </div>
+            </Reveal>
+
+            <Reveal delay={320}>
+              <div className="mt-14 grid grid-cols-3 border-t border-white/10 pt-7">
+                {stats.map((s, i) => (
+                  <div
+                    key={s.d}
+                    className={
+                      i < 2
+                        ? "border-r border-white/10 pr-4"
+                        : ""
+                    }
+                    style={i > 0 ? { paddingLeft: 24 } : undefined}
+                  >
+                    <div
+                      className="font-display font-bold tracking-[-0.03em] text-white"
+                      style={{ fontSize: "clamp(26px,3.2vw,38px)" }}
+                    >
+                      {s.n}
+                      {s.u && (
+                        <>
+                          <span className="ml-1 text-brand-500">·</span>
+                          <span
+                            className="ml-1.5 font-medium text-white/65"
+                            style={{ fontSize: "0.5em" }}
+                          >
+                            {s.u}
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    <div className="mt-1 text-[13px] text-white/65">{s.d}</div>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
           </div>
-          <div className="anim-float-slow absolute -bottom-6 -left-6 hidden w-56 sm:block">
-            <PlaceholderImage label="Equipe" ratio="square" className="ring-white/10" />
+
+          {/* RIGHT — collage */}
+          <div className="relative aspect-[1/1.05] min-h-[460px] max-lg:min-h-[380px] max-lg:aspect-[1/0.85]">
+            <Reveal delay={120} className="absolute inset-[0_30%_20%_0]">
+              <div className="anim-float h-full">
+                <PlaceholderImage
+                  label="obra atendida · cliente guarujá"
+                  ratio="free"
+                  dark
+                  className="h-full rounded-[20px]"
+                />
+              </div>
+            </Reveal>
+            <Reveal delay={220} className="absolute inset-[28%_0_0_38%]">
+              <div className="anim-float-slow h-full">
+                <PlaceholderImage
+                  label="obra atendida · reforma"
+                  ratio="free"
+                  dark
+                  className="h-full rounded-[20px]"
+                />
+              </div>
+            </Reveal>
+            <Reveal
+              delay={320}
+              className="absolute bottom-[8%] left-[-6%] w-[64%]"
+            >
+              <div className="anim-float-card rounded-2xl border border-stone-200 bg-white px-5 pb-4 pt-5 shadow-lift">
+                <div className="font-mono text-[11px] uppercase tracking-[0.16em] text-stone-500">
+                  Clientes atendidos
+                </div>
+                <div className="mt-1.5 font-display text-[20px] font-bold tracking-[-0.02em] text-ink-900">
+                  Obras no Guarujá
+                </div>
+                <div className="mt-1 text-[13px] text-stone-600">
+                  Residências, reformas, condomínios
+                </div>
+              </div>
+            </Reveal>
+
+            <div
+              className="absolute right-[4%] top-[-4%] rounded-[14px] bg-brand-500 px-5 pb-5 pt-4 text-white shadow-brand"
+              style={{ transform: "rotate(3deg)" }}
+            >
+              <div className="font-mono text-[10px] uppercase tracking-[0.2em] opacity-90">
+                Guarujá · {store.since}
+              </div>
+              <div
+                className="mt-1.5 font-display font-extrabold leading-[0.9] tracking-[-0.04em]"
+                style={{ fontSize: "clamp(34px,4.8vw,52px)" }}
+              >
+                Obra
+                <br />
+                em&nbsp;dia.
+              </div>
+            </div>
           </div>
-        </Reveal>
+        </div>
       </Container>
     </section>
   );
