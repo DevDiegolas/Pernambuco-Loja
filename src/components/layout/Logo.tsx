@@ -15,7 +15,7 @@ export default function Logo({
   showText = false,
   variant = "default",
 }: Props) {
-  const height = variant === "compact" ? "h-20" : "h-56";
+  const height = variant === "compact" ? "h-20" : "h-40";
 
   return (
     <a
