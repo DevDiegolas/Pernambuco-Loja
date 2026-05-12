@@ -1,8 +1,9 @@
 import { Clock, MapPin, MessageCircle } from "lucide-react";
 import Container from "../../components/ui/Container";
 import Reveal from "../../components/ui/Reveal";
-import PlaceholderImage from "../../components/ui/PlaceholderImage";
+import StoreImage from "../../components/ui/StoreImage";
 import { store } from "../../data/store";
+import { storeImages } from "../../data/storeImages";
 import { SECTIONS } from "../../lib/sections";
 import { cn } from "../../lib/cn";
 
@@ -30,8 +31,9 @@ export default function LocationsSection() {
             <Reveal key={unit.name} delay={i * 80}>
               <article className="flex h-full flex-col overflow-hidden rounded-[18px] border border-stone-200 bg-white">
                 <div className="relative">
-                  <PlaceholderImage
-                    label={`${unit.name.toLowerCase()} · fachada`}
+                  <StoreImage
+                    src={storeImages.locations[i]}
+                    alt={`Foto da ${unit.name} da Pernambuco Materiais`}
                     ratio="free"
                     className="h-[220px] rounded-none"
                   />

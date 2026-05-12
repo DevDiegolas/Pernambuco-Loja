@@ -2,12 +2,16 @@ import { ArrowRight, MessageCircle } from "lucide-react";
 import Container from "../../components/ui/Container";
 import Reveal from "../../components/ui/Reveal";
 import Icon from "../../components/ui/Icon";
+import StoreImage from "../../components/ui/StoreImage";
 import { categories } from "../../data/categories";
 import { store } from "../../data/store";
+import { storeImages } from "../../data/storeImages";
 import { SECTIONS } from "../../lib/sections";
 
 const waLink = (txt: string) =>
   `https://wa.me/${store.contact.whatsapp}?text=${encodeURIComponent(txt)}`;
+
+const categoryImages: Record<string, string> = storeImages.categories;
 
 export default function ProductsSection() {
   return (
@@ -38,32 +42,19 @@ export default function ProductsSection() {
                 href={waLink(`Olá! Queria saber sobre ${c.name.toLowerCase()}.`)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="card card-hover flex h-full flex-col overflow-hidden"
+                className="card card-hover group flex h-full flex-col overflow-hidden"
               >
-                {/* Topo: ícone com fundo escuro + grid decorativo */}
-                <div
-                  className="relative flex min-h-[200px] items-center justify-center overflow-hidden border-b border-stone-200 bg-stone-50 px-7 pb-7 pt-9"
-                >
-                  <div
-                    aria-hidden
-                    className="absolute inset-0"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(to right, rgba(11,18,32,.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(11,18,32,.05) 1px, transparent 1px)",
-                      backgroundSize: "28px 28px",
-                      WebkitMaskImage:
-                        "radial-gradient(ellipse 70% 70% at 50% 50%, #000 40%, transparent 100%)",
-                      maskImage:
-                        "radial-gradient(ellipse 70% 70% at 50% 50%, #000 40%, transparent 100%)",
-                    }}
+                <div className="relative overflow-hidden border-b border-stone-200">
+                  <StoreImage
+                    src={categoryImages[c.slug]}
+                    alt={`Produtos de ${c.name.toLowerCase()} disponíveis na Pernambuco Materiais`}
+                    ratio="video"
+                    className="rounded-none"
+                    imageClassName="transition duration-500 group-hover:scale-[1.03]"
                   />
-                  <div
-                    className="relative grid h-[110px] w-[110px] place-items-center rounded-3xl bg-ink-900 text-brand-400"
-                    style={{
-                      boxShadow: "0 18px 40px -16px rgba(11,18,32,.4)",
-                    }}
-                  >
-                    <Icon name={c.icon} className="h-14 w-14" strokeWidth={1.5} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-900/55 via-ink-900/10 to-transparent" />
+                  <div className="absolute bottom-4 left-4 grid h-[52px] w-[52px] place-items-center rounded-xl bg-white text-brand-600 shadow-lift">
+                    <Icon name={c.icon} className="h-6 w-6" strokeWidth={1.7} />
                   </div>
                 </div>
 
