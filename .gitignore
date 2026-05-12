@@ -79,6 +79,9 @@ docs/
 # Bundle do Claude Design (handoff local — não sobe pro repo)
 claudedesign/
 
+# Fotos brutas recebidas da loja; o site usa cópias selecionadas em public/site-images/
+public/fotos-loja/
+
 # Diversos
 *.pem
 .history

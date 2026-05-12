@@ -1,7 +1,8 @@
 import { ArrowRight, MapPin, MessageCircle } from "lucide-react";
 import Container from "../../components/ui/Container";
-import PlaceholderImage from "../../components/ui/PlaceholderImage";
 import Reveal from "../../components/ui/Reveal";
+import StoreImage from "../../components/ui/StoreImage";
+import { storeImages } from "../../data/storeImages";
 import { store } from "../../data/store";
 import { SECTIONS } from "../../lib/sections";
 import { scrollToSection } from "../../lib/scroll";
@@ -118,21 +119,25 @@ export default function Hero() {
           <div className="relative aspect-[1/1.05] min-h-[460px] max-lg:min-h-[380px] max-lg:aspect-[1/0.85]">
             <Reveal delay={120} className="absolute inset-[0_30%_20%_0]">
               <div className="anim-float h-full">
-                <PlaceholderImage
-                  label="obra atendida · cliente guarujá"
+                <StoreImage
+                  src={storeImages.heroPrimary}
+                  alt="Fachada da Pernambuco Materiais no Guarujá"
+                  label="loja principal · guarujá"
                   ratio="free"
-                  dark
-                  className="h-full rounded-[20px]"
+                  className="h-full rounded-[20px] border border-white/10 shadow-lift"
+                  imageClassName="brightness-[0.88] contrast-[1.04]"
                 />
               </div>
             </Reveal>
             <Reveal delay={220} className="absolute inset-[28%_0_0_38%]">
               <div className="anim-float-slow h-full">
-                <PlaceholderImage
-                  label="obra atendida · reforma"
+                <StoreImage
+                  src={storeImages.heroSecondary}
+                  alt="Balcão com ferramentas, hidráulica e acessórios de construção"
+                  label="estoque completo"
                   ratio="free"
-                  dark
-                  className="h-full rounded-[20px]"
+                  className="h-full rounded-[20px] border border-white/10 shadow-lift"
+                  imageClassName="brightness-[0.82] contrast-[1.08]"
                 />
               </div>
             </Reveal>

@@ -1,8 +1,9 @@
 import { MessageCircle } from "lucide-react";
 import Container from "../../components/ui/Container";
-import PlaceholderImage from "../../components/ui/PlaceholderImage";
 import Reveal from "../../components/ui/Reveal";
+import StoreImage from "../../components/ui/StoreImage";
 import { store } from "../../data/store";
+import { storeImages } from "../../data/storeImages";
 import { SECTIONS } from "../../lib/sections";
 
 const valueGrid = [
@@ -27,15 +28,19 @@ export default function AboutSection() {
           {/* Esquerda: 2 fotos lado a lado */}
           <Reveal>
             <div className="grid grid-cols-2 gap-3.5">
-              <PlaceholderImage
+              <StoreImage
+                src={storeImages.aboutStorefront}
+                alt="Entrada da loja com a marca Pernambuco Materiais"
                 label="loja 1 · praia de pernambuco"
                 ratio="free"
-                className="h-[380px] rounded-2xl max-md:h-[260px]"
+                className="h-[380px] rounded-2xl shadow-lift max-md:h-[260px]"
               />
-              <PlaceholderImage
+              <StoreImage
+                src={storeImages.aboutShowroom}
+                alt="Vitrine da unidade no Shopping Acapulco com produtos de construção"
                 label="loja 2 · shopping acapulco"
                 ratio="free"
-                className="h-[380px] rounded-2xl max-md:h-[260px]"
+                className="h-[380px] rounded-2xl shadow-lift max-md:h-[260px]"
               />
             </div>
           </Reveal>
